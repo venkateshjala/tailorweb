@@ -4,8 +4,9 @@ FROM python:3.11-slim
 # Install system dependencies for SQL Server (Azure)
 RUN apt-get update && apt-get install -y \
     curl apt-transport-https gnupg2 unixodbc-dev g++ \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && mkdir -p /etc/apt/keyrings \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg \
+    && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/debian/11/prod bullseye main" > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql17
 
@@ -19,5 +20,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of your code
 COPY . .
 
-# Start the application (Replace 'myproject' with your folder name containing wsgi.py)
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"] 
+# Start the application 
+# IMPORTANT: Change 'auth_Project' to the folder name that contains your wsgi.py
+CMD ["gunicorn", "auth_Project.wsgi:application", "--bind", "0.0.0.0:8000"]
