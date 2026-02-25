@@ -166,9 +166,6 @@ def payment_mode_list(request):
     })
 
 
-def test_view(request):
-    return render(request, 'index.html')
-
 def debug_media(request):
     media_root = settings.MEDIA_ROOT
     media_url = settings.MEDIA_URL
@@ -188,3 +185,6 @@ def debug_media(request):
     <b>Full System Path to File:</b> {target_file}
     """
     return HttpResponse(debug_info)
+
+def test_view(request):
+    return render(request, 'index.html')
