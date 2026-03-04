@@ -22,4 +22,4 @@ COPY . .
 
 # Start the application 
 # IMPORTANT: Change 'auth_Project' to the folder name that contains your wsgi.py
-CMD ["gunicorn", "auth_Project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "auth_project.wsgi:application", "--bind", "0.0.0.0:8000"]
