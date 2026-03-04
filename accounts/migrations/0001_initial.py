@@ -10,17 +10,17 @@ class Migration(migrations.Migration):
     dependencies = [
     ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Vendor',
-            fields=[
-                ('id', models.CharField(max_length=20, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=255)),
-            ],
-            options={
-                'verbose_name': 'Vendor',
-                'verbose_name_plural': 'Vendors',
-                'db_table': 'vendor',
-            },
-        ),
-    ]
+    # operations = [
+    #     migrations.CreateModel(
+    #         # name='Vendor',
+            # fields=[
+            #     ('id', models.CharField(max_length=20, primary_key=True, serialize=False)),
+            #     ('name', models.CharField(max_length=255)),
+            # ],
+            # options={
+            #     'verbose_name': 'Vendor',
+            #     'verbose_name_plural': 'Vendors',
+            #     'db_table': 'vendor',
+            # },
+    #     ),
+    # ]

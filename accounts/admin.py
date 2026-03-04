@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Product
+from .models import CompanyDetails, Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -13,3 +13,5 @@ class ProductAdmin(admin.ModelAdmin):
         return "No Image"
     
     display_image.short_description = 'Thumbnail'
+
+admin.site.register(CompanyDetails)

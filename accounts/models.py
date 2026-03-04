@@ -3,24 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 from django.db import models
 
-class Vendor(models.Model):
-    id = models.CharField(
-        max_length=20,
-        primary_key=True
-    )
-    name = models.CharField(
-        max_length=255
-    )
-
-    class Meta:
-        db_table = "vendor"
-        verbose_name = "Vendor"
-        verbose_name_plural = "Vendors"
-
-    def __str__(self):
-        return f"{self.id} - {self.name}"
-    
-
 
 class Product(models.Model):
     GENDER_CHOICES = [
@@ -86,3 +68,19 @@ class PaymentMode(models.Model):
 
     def __str__(self):
         return self.name
+
+class CompanyDetails(models.Model):
+    company_name = models.CharField(max_length=200)
+    address = models.TextField(blank=True)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField(blank=True)
+    gstin = models.CharField(max_length=20, blank=True)
+    logo = models.ImageField(upload_to='company_logos/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.company_name
+    
+    class Meta:
+        verbose_name = "Company Detail"
+        verbose_name_plural = "Company Details"

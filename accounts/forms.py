@@ -1,5 +1,5 @@
 from django import forms
-from .models import PaymentMode, Product,MeasurementMaster,Customer
+from .models import PaymentMode, Product,MeasurementMaster,Customer,CompanyDetails
 
 
 
@@ -46,3 +46,23 @@ class PaymentModeForm(forms.ModelForm):
             'is_cash': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }        
+
+
+class CompanyDetailsForm(forms.ModelForm):
+    class Meta:
+        model = CompanyDetails
+        fields = '__all__'
+        widgets = {
+            'company_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'gstin': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'company_name': 'Company Name',
+            'address': 'Address',
+            'phone': 'Phone',
+            'email': 'Email',
+            'gstin': 'GSTIN',
+        }

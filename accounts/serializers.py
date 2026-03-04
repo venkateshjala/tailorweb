@@ -1,16 +1,16 @@
 from rest_framework import serializers
-from .models import PaymentMode, ProductMeasurementMap, Vendor
+from .models import CompanyDetails, PaymentMode, ProductMeasurementMap
 from .models import Product,MeasurementMaster
 
-class VendorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vendor
-        fields = ['id', 'name']
-
-# class ProductSerializer(serializers.ModelSerializer):
+# class VendorSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = Product
-#         fields = '__all__'
+#         model = Vendor
+#         fields = ['id', 'name']
+
+class CompanyDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyDetails
+        fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
     # This will return the full URL (http://...)

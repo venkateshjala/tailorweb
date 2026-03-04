@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inventory System{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root { --sidebar-width: 250px; }
+        body { background-color: #f8f9fa; }
+        
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            background-color: #212529;
+            z-index: 1000;
+        }
+
+        #sidebar .nav-link {
+            color: #adb5bd;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #sidebar .nav-link:hover, #sidebar .nav-link.active {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        #main-wrapper {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<nav id="sidebar" class="d-flex flex-column">
+    <div class="p-3 text-white border-bottom border-secondary mb-3">
+        <h4 class="mb-0 fw-bold"><i class="bi bi-box-seam me-2"></i>TailorPro</h4>
+    </div>
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item"><a href="/" class="nav-link"><i class="bi bi-house"></i> Home</a></li>
+        <li class="nav-item"><a href="/dashboard" class="nav-link"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        <li class="nav-item"><a href="{% url 'product_list' %}" class="nav-link"><i class="bi bi-box"></i> Product</a></li>
+        <li class="nav-item"><a href="/customers" class="nav-link"><i class="bi bi-people"></i> Customers</a></li>
+        <li class="nav-item"><a href="/measurements" class="nav-link"><i class="bi bi-ruler"></i> Measurement</a></li>
+    </ul>
+</nav>
+
+<div id="main-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom px-4">
+        <div class="container-fluid">
+            <span class="navbar-text text-dark fw-medium">Management System</span>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="me-3 text-muted">Hi, <strong>{{ user.username|default:"User" }}</strong></span>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -9,6 +9,7 @@ urlpatterns = [
     # Point everything to accounts. We will handle the 'api/' prefix inside accounts.urls
     path('', include('accounts.urls')), 
     path('debug-media/', views.debug_media),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # Serves media files during development

@@ -5,9 +5,9 @@ from rest_framework import status
 from django.shortcuts import render, redirect
 #api views
 from rest_framework.viewsets import ModelViewSet
-from .serializers import MeasurementMasterSerializer, PaymentModeSerializer, ProductMeasurementMapSerializer, VendorSerializer,ProductSerializer
+from .serializers import CompanyDetailsSerializer, MeasurementMasterSerializer, PaymentModeSerializer, ProductMeasurementMapSerializer, ProductSerializer
 # Masters 
-from .models import PaymentMode, Product,Customer, MeasurementMaster, ProductMeasurementMap,Vendor
+from .models import CompanyDetails, PaymentMode, Product,Customer, MeasurementMaster, ProductMeasurementMap
 #forms
 from .forms import PaymentModeForm, ProductForm,CustomerForm,MeasurementMasterForm
 
@@ -16,9 +16,9 @@ from django.conf import settings
 from django.http import HttpResponse
 
 
-class VendorViewSet(ModelViewSet):
-    queryset = Vendor.objects.all().order_by('id')
-    serializer_class = VendorSerializer
+class CompanyDetailsViewSet(ModelViewSet):
+    queryset = CompanyDetails.objects.all()
+    serializer_class = CompanyDetailsSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -188,3 +188,8 @@ def debug_media(request):
 
 def test_view(request):
     return render(request, 'index.html')
+
+def logout_view(request):
+    from django.contrib.auth import logout
+    logout(request)
+    return redirect('login')
