@@ -7,11 +7,24 @@ from .models import Product,MeasurementMaster
 #         model = Vendor
 #         fields = ['id', 'name']
 
+# class CompanyDetailsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CompanyDetails
+#         fields = '__all__'
+
 class CompanyDetailsSerializer(serializers.ModelSerializer):
+    logo = serializers.SerializerMethodField()
+
     class Meta:
         model = CompanyDetails
         fields = '__all__'
 
+    def get_logo(self, obj):
+        if obj.logo:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.logo.url)
+        return "https://tailorweb-1.onrender.com/media/company_logos/logo.jpeg"
+    
 class ProductSerializer(serializers.ModelSerializer):
     # This will return the full URL (http://...)
     image = serializers.ImageField(use_url=True, required=False)

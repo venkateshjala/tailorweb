@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,6 +14,19 @@ from .forms import PaymentModeForm, ProductForm,CustomerForm,MeasurementMasterFo
 import os
 from django.conf import settings
 from django.http import HttpResponse
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect("product_list")  # Redirect to dashboard or product list after login
+        else:
+            return render(request, "login.html", {"error": "Invalid credentials"})
+    return render(request, "login.html")
 
 
 class CompanyDetailsViewSet(ModelViewSet):

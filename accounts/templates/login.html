@@ -3,100 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | StockFlow</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <title>TailorPro Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    
     <style>
+        :root {
+            --bg-off: #121417;
+            /* Golden Gradient for the "ON" state */
+            --bg-on: radial-gradient(circle, #2c2518 0%, #121417 100%);
+            --lamp-off: #444;
+            --lamp-on: #ffffff;
+            --gold: linear-gradient(to right, #e2c07d, #ffebad, #e2c07d);
+        }
+
         body {
-            background-color: #f8f9fa;
-            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-off);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        .container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 80px;
         }
+
+        /* --- THE LAMP --- */
+        .lamp-container {
+            position: relative;
+            height: 400px;
+            width: 150px;
+        }
+
+        .lamp-top {
+            width: 140px;
+            height: 70px;
+            background: var(--lamp-off);
+            border-radius: 70px 70px 10px 10px;
+            position: relative;
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+        .lamp-base {
+            width: 8px;
+            height: 180px;
+            background: #333;
+            margin-left: 66px;
+        }
+
+        /* --- DRAGGABLE STRING --- */
+        .pull-string-wrapper {
+            position: absolute;
+            left: 90px;
+            top: 60px;
+            z-index: 5;
+        }
+
+        .string {
+            width: 2px;
+            height: 100px; /* Base length */
+            background: #888;
+            transform-origin: top;
+        }
+
+        .bead {
+            width: 16px;
+            height: 16px;
+            background: #555;
+            border-radius: 50%;
+            margin-left: -7px;
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .bead:active { cursor: grabbing; }
+
+        /* --- LIGHT EFFECTS --- */
+        .light-ray {
+            position: absolute;
+            top: 70px;
+            left: -25px;
+            width: 190px;
+            height: 280px;
+            background: radial-gradient(ellipse at top, rgba(255, 230, 150, 0.2), transparent 80%);
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        /* --- LOGIN FORM --- */
         .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 320px;
+            transform: translateX(50px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- "ON" STATES --- */
+        body.is-on { background: var(--bg-on); }
+        body.is-on .lamp-top { background: var(--lamp-on); box-shadow: 0 0 50px rgba(255,255,255,0.4); }
+        body.is-on .light-ray { opacity: 1; }
+        body.is-on .login-card { opacity: 1; visibility: visible; transform: translateX(0); }
+
+        h2 { color: white; margin-bottom: 25px; text-align: center; font-weight: 300; }
+        label { color: #aaa; font-size: 12px; display: block; margin-bottom: 5px; }
+        input {
             width: 100%;
-            max-width: 400px;
+            padding: 12px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .sign-in-btn {
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 12px;
-        }
-        .brand-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #0d6efd;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .form-control:focus {
-            box-shadow: none;
-            border-color: #0d6efd;
-        }
-        .btn-login {
-            padding: 10px;
-            font-weight: 600;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #432;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
+    <div class="container">
+        <div class="lamp-container">
+            <div class="lamp-top"></div>
+            <div class="lamp-base"></div>
             
-            <div class="brand-logo">
-                <i class="bi bi-box-seam me-2"></i>StockFlow
+            <div class="pull-string-wrapper" id="stringWrapper">
+                <div class="string" id="stringLine"></div>
+                <div class="bead" id="dragBead"></div>
             </div>
 
-            <div class="card login-card shadow-sm">
-                <div class="card-body p-5">
-                    <h4 class="text-center mb-4 fw-bold">Sign In</h4>
-                    
-                    {% if form.errors %}
-                        <div class="alert alert-danger py-2 small">
-                            Invalid User ID or password.
-                        </div>
-                    {% endif %}
-
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        
-                        <div class="mb-3">
-                            <label for="username" class="form-label small fw-bold text-muted">User ID</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0 text-muted">
-                                    <i class="bi bi-person"></i>
-                                </span>
-                                <input type="text" name="username" id="username" class="form-control border-start-0 bg-light" placeholder="Enter your ID" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="password" class="form-label small fw-bold text-muted">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0 text-muted">
-                                    <i class="bi bi-lock"></i>
-                                </span>
-                                <input type="password" name="password" id="password" class="form-control border-start-0 bg-light" placeholder="••••••••" required>
-                            </div>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-login shadow-sm">
-                                Login to Dashboard
-                            </button>
-                        </div>
-                    </form>
-                    
-                </div>
-            </div>
-
-            <div class="text-center mt-4 text-muted small">
-                &copy; 2026 StockFlow Inventory Management
-            </div>
+            <div class="light-ray"></div>
         </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="login-card">
+            <h2>Welcome</h2>
+        <form method="post">
+                  {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="user_name">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="•••••">
+                </div>
+                <button type="submit" class="sign-in-btn">Sign In</button>
+            </form>
+                </div>
+    </div>
+
+    <script>
+        let isOn = false;
+        const body = document.body;
+        const stringLine = document.getElementById('stringLine');
+
+        // Initialize GSAP Draggable
+        Draggable.create("#dragBead", {
+            type: "y",
+            bounds: { minY: 0, maxY: 60 }, // Limit how far they can pull
+            onDrag: function() {
+                // Stretch the string visually while dragging
+                gsap.set(stringLine, { scaleY: 1 + (this.y / 100) });
+            },
+            onRelease: function() {
+                // If pulled down more than 30px, toggle the lamp
+                if (this.y > 30) {
+                    toggleLamp();
+                }
+                // Snap the bead and string back to original position
+                gsap.to(this.target, { y: 0, duration: 0.4, ease: "back.out(4)" });
+                gsap.to(stringLine, { scaleY: 1, duration: 0.4, ease: "back.out(4)" });
+            }
+        });
+
+        function toggleLamp() {
+            isOn = !isOn;
+            if (isOn) {
+                body.classList.add('is-on');
+            } else {
+                body.classList.remove('is-on');
+            }
+        }
+    </script>
 </body>
 </html>

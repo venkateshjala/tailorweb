@@ -18,6 +18,7 @@ urlpatterns = [
     path('measurements/master/', views.measurement_master_list, name='measurement_master'),
     path('payments/modes/', views.payment_mode_list, name='payment_mode_list'),
     path('logout/', views.logout_view, name='logout'),
+    path('login/', views.login_view, name='login'),
 
     # 2. API Routes (This will now be accessible at http://127.0.0.1:8000/api/products/)
     path('api/', include(router.urls)), 

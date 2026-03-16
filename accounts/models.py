@@ -84,3 +84,5 @@ class CompanyDetails(models.Model):
     class Meta:
         verbose_name = "Company Detail"
         verbose_name_plural = "Company Details"
+
+
