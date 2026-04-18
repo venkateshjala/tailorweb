@@ -93,7 +93,7 @@ def create_product(request):
     return render(request, 'create_product.html', {'form': form})
 
 def product_list(request):
-    products = Product.objects.all().order_by('-id') # Newest products first
+    products = Product.objects.all().order_by('product_id') # Newest products first
     return render(request, 'product_list.html', {'products': products})
 
 def customer_dashboard(request):
@@ -130,6 +130,7 @@ def manage_product_measurements(request):
             display_order=order,
             is_required=required
         )
+        print(f"Created mapping: Product {prod_id} - Measurement {meas_id} (Order: {order}, Required: {required})")
         return redirect('manage_measurements')
 
     return render(request, 'manage_measurements.html', {

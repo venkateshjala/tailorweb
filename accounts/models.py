@@ -12,7 +12,7 @@ class Product(models.Model):
     ]
 
     # Manual 6-digit ID
-    id = models.IntegerField(
+    product_id = models.IntegerField(
         primary_key=True, 
         validators=[MinValueValidator(100000), MaxValueValidator(999999)]
     )

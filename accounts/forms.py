@@ -6,12 +6,12 @@ from .models import PaymentMode, Product,MeasurementMaster,Customer,CompanyDetai
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'gender', 'price', 'image', 'is_active']
+        fields = ['product_id', 'name', 'gender', 'price', 'image', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-select'}),
-            'id': forms.NumberInput(attrs={'class': 'form-control'}),
+            'product_id': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
 

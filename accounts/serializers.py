@@ -2,15 +2,6 @@ from rest_framework import serializers
 from .models import CompanyDetails, PaymentMode, ProductMeasurementMap
 from .models import Product,MeasurementMaster
 
-# class VendorSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Vendor
-#         fields = ['id', 'name']
-
-# class CompanyDetailsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = CompanyDetails
-#         fields = '__all__'
 
 class CompanyDetailsSerializer(serializers.ModelSerializer):
     logo = serializers.SerializerMethodField()
@@ -23,7 +14,7 @@ class CompanyDetailsSerializer(serializers.ModelSerializer):
         if obj.logo:
             request = self.context.get('request')
             return request.build_absolute_uri(obj.logo.url)
-        return "https://tailorweb-1.onrender.com/media/company_logos/logo.jpeg"
+        return "https://tailorweb-1.onrender.com/media/company_logos/logo.png"
     
 class ProductSerializer(serializers.ModelSerializer):
     # This will return the full URL (http://...)
@@ -31,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'gender', 'price', 'image', 'is_active']        
+        fields = ['product_id', 'name', 'gender', 'price', 'image', 'is_active']        
 
 class MeasurementMasterSerializer(serializers.ModelSerializer):
     class Meta:

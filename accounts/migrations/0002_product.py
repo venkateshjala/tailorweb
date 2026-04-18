@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False, validators=[django.core.validators.MinValueValidator(100000), django.core.validators.MaxValueValidator(999999)])),
+                ('product_id', models.IntegerField(primary_key=True, serialize=False, validators=[django.core.validators.MinValueValidator(100000), django.core.validators.MaxValueValidator(999999)])),
                 ('name', models.CharField(max_length=255)),
                 ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Female'), ('U', 'Unisex')], max_length=1)),
                 ('price', models.DecimalField(decimal_places=2, max_digits=10)),

@@ -5,7 +5,7 @@ from .models import CompanyDetails, Product
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     # Add 'display_image' to the list_display
-    list_display = ('id', 'display_image', 'name', 'price', 'is_active')
+    list_display = ('product_id', 'display_image', 'name', 'price', 'is_active')
     
     def display_image(self, obj):
         if obj.image:
